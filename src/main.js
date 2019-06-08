@@ -11,6 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 //引入自己创建的组件
 import App from './App.vue';
 import Login from './pages/Login.vue';
+import Admin from './pages/Admin.vue'
 
 //因为Vue是一个构造函数，它有一个属性prototype(Vue.prototype原型对象)，只有把axios绑定到Vue的原型对象上，就不需要每个组件都去引用axios 了，方便我们调用axios
 Vue.prototype.$axios = axios;
@@ -21,6 +22,7 @@ Vue.use(VueRouter);//注册路由
 
 //4. 配置路由
 const routes =[
+  {path:'/',component:Admin},
   {path:'/login',component:Login},
 ]
 
@@ -36,4 +38,4 @@ new Vue({
 
   //6.将路由实例挂载在根实例上
   router,
-}).$mount('#app')
+}).$mount('#app')// $mount绑定控制区域，相当于el
