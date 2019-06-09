@@ -13,7 +13,10 @@
 
         <el-main>
           <!-- 渲染面包屑组件 -->
-          <Crumbs>  </Crumbs>
+          <Crumbs> </Crumbs>
+          
+          <!-- 子路由匹配到的组件 -->
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>

@@ -3,8 +3,10 @@
     <!-- default-active:默认选中的选项 -->
     <!-- active-text-color:高亮时的颜色 -->
     <!-- collapse默认是false展开菜单，true收起菜单 -->
+
+    <!-- 默认打开商品管理(1-1)为高亮显示 -->
     <el-menu
-      default-active="1"
+      default-active="1-1"
       class="el-menu-vertical-demo"
       background-color="#001529"
       text-color="#fff"
@@ -21,11 +23,19 @@
         </template>
 
         <el-menu-item index="1-1">
-          <template slot="title">商品管理</template>
+          <template slot="title">
+            <router-link to='/admin/goods-list'>
+              商品管理
+            </router-link>
+          </template>
         </el-menu-item>
 
         <el-menu-item index="1-2">
-          <template slot="title">栏目管理</template>
+          <template slot="title">
+            <router-link to='/admin/category-list'>
+              栏目管理
+            </router-link>
+          </template>
         </el-menu-item>
       </el-submenu>
     </el-menu>
@@ -46,5 +56,10 @@ export default {
   .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 200px;
         min-height: 400px;
+    }
+    .el-menu-vertical-demo a{
+      /* 去除a标签的默认颜色 */
+      color: inherit;
+      text-decoration: none;
     }
 </style>

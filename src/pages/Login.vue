@@ -66,7 +66,7 @@ export default {
             //处理session跨域
             withCredentials:true,
           }).then(res=>{//发送数据成功，后台验证
-          //结构并且赋值
+          //解构并且赋值
           console.log(res);
           const {message,status}=res.data;
           //登录成功后执行的代码
