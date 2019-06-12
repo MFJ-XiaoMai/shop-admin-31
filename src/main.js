@@ -14,6 +14,8 @@ import Login from './pages/Login.vue';
 import Admin from './pages/Admin.vue';
 import GoodsList from "./pages/GoodsList.vue";
 import CategoryList from "./pages/CategoryList.vue";
+import GoodsAdd from "./pages/GoodsAdd.vue";
+import GoodsEdit from './pages/GoodsEdit.vue'
 
 //因为Vue是一个构造函数，它有一个属性prototype(Vue.prototype原型对象)，只有把axios绑定到Vue的原型对象上，就不需要每个组件都去引用axios 了，方便我们调用axios
 Vue.prototype.$axios = axios;
@@ -44,6 +46,16 @@ const routes = [
         path: 'goods-list',
         component: GoodsList,
         meta: '商品列表'
+      },
+      {
+        path:'goods-add',
+        component:GoodsAdd,
+        meta:'添加商品'
+      },
+      {
+        path:'goods-edit/:id',
+        component:GoodsEdit,
+        meta:'编辑商品'
       },
       {
         path: 'category-list',

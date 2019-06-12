@@ -7,7 +7,7 @@
     class="goods-top">
       <!-- 按钮列表 -->
       <div>
-        <el-button>新增</el-button>
+        <el-button @click="handleToGoodsAdd">新增</el-button>
         <el-button type="danger" @click="handleDleMore">删除</el-button>
       </div>
       <!-- 搜索输入框 -->
@@ -121,20 +121,20 @@ export default {
     return {
       //模拟数据，会被接口替换
       tableData: [
-        {
-            id: 103,        
-            title: "骆驼男装2017秋季新款运动休闲纯色夹克青年宽松长袖针织开衫卫",
-            is_top: 1,
-            is_hot: 1,
-            is_slide: 1,      
-            categoryname: "男装",
-            img_url: "/imgs/SJ4EgwosX0wTqvyAvhtFGT1w.jpg",
-            imgurl:"http://127.0.0.1:8899/upload/201504/20/thumb_201504200214471783.jpg",
-            goods_no: "NZ0000000002",
-            stock_quantity: 200,
-            market_price: 1000,
-            sell_price: 800 
-        }
+      //   {
+      //       id: 103,        
+      //       title: "骆驼男装2017秋季新款运动休闲纯色夹克青年宽松长袖针织开衫卫",
+      //       is_top: 1,
+      //       is_hot: 1,
+      //       is_slide: 1,      
+      //       categoryname: "男装",
+      //       img_url: "/imgs/SJ4EgwosX0wTqvyAvhtFGT1w.jpg",
+      //       imgurl:"http://127.0.0.1:8899/upload/201504/20/thumb_201504200214471783.jpg",
+      //       goods_no: "NZ0000000002",
+      //       stock_quantity: 200,
+      //       market_price: 1000,
+      //       sell_price: 800 
+      //   }
       ],
       selectGoods:[], //选中的商品
       searchValue:'', //搜索框里的关键字
@@ -192,8 +192,11 @@ export default {
     },
 
     // 编辑商品
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit(goods) {
+      // console.log(goods);
+      // 每一行商品的编辑按钮被点击时都会跳转到编辑商品页面，跳转时要带上被点击商品的id
+      this.$router.push('/admin/goods-edit/' + goods.id)
+      
     },
 
     //删除多个商品
@@ -223,7 +226,7 @@ export default {
       //   }
       // })
 
-        this.getDelShopList(ids)
+        this.getDelShopList(ids)//调用函数
     },
 
     // 删除单个商品
@@ -246,7 +249,7 @@ export default {
       //   }
       // })
 
-      this.getDelShopList(id)
+      this.getDelShopList(id)//调用函数
     },
     
     // 条数的切换
@@ -275,8 +278,14 @@ export default {
       // this.searchValue
 
       //调用函数发起异步请求，赋值给searchValue
-      this.getList()
+      this.getList()//调用函数
+    },
+
+    // 点击新增按钮跳转到新增商品页
+    handleToGoodsAdd(){
+      this.$router.push('/admin/goods-add')
     }
+
   },
   mounted(){
     // 发送异步请求 请求数据
@@ -295,7 +304,7 @@ export default {
         
       // })
 
-      this.getList()
+      this.getList()//调用函数
   }
 };
 </script>
