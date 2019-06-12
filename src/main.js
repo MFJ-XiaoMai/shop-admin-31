@@ -71,6 +71,55 @@ const router = new VueRouter({
   routes
 })
 
+//路由卫士是路由对象的一个方法beforEach,它会监听每次页面的请求，并且可以通过三个参数来获取不同的信息
+/**
+ * to：表示去哪个页面
+ * form: 表示页面的来源
+ * next是一个函数，接受的参数url，并且可以跳转到该url，如果不传参数就跳到头的页面
+ */
+//next()方法是必须要调用的
+router.beforeEach((to,form,next)=>{
+  // console.log(to,form);
+  // next()
+  // 每次请求页面时，axios调用接口判断是否是登录状态
+  axios({
+    url:"http://localhost:8899/admin/account/islogin",
+    method:'GET',
+    // 处理session跨域
+    withCredentials:true,
+  }).then(res => {
+    const {code} = res.data
+    // console.log(code);//logined
+    
+    //处理登录页和非登录页的判断
+    //如果访问的页面是登录页
+    if(to.path==='/login'){
+    //则判断是否是登录状态
+    //若是登录状态
+      if(code==="logined"){
+        //则跳转到首页'/admin/goods-list'
+        next('/admin/goods-list')
+      }else{
+        //若是未登录状态则继续显示登录页面
+        next()
+      }
+    //否则访问的是未登录页
+    }else{
+      // 如果是登录状态
+      if(code==='logined'){
+        //则继续显示当前访问的页面
+        next()
+        
+      //否则是未登路状态
+      }else{
+        //否则返回登录页面
+        next('/login')
+      }
+    }
+  })
+})
+
+
 Vue.config.productionTip = false;
 
 new Vue({

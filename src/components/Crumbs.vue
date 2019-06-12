@@ -20,7 +20,7 @@ export default {
   watch:{
     //保存meta信息
     $route(){
-      console.log(this.$route.matched);
+      // console.log(this.$route.matched);
       //获取matched里的每一项meta信息
     //   const arr=this.$route.matched;
     //   let info=[];

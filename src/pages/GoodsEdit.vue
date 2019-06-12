@@ -75,7 +75,7 @@
         :on-preview="handlePictureCardPreview"
         :on-remove="handleRemove"
         :on-success="handleCartSuccess"
-        :file-list='form.fileList'
+        :file-list="form.fileList"
       >
         <i class="el-icon-plus"></i>
       </el-upload>
@@ -123,9 +123,9 @@ export default {
         stock_quantity: "",
         market_price: "",
         sell_price: "",
-        fileList: [], //多张图片
+        fileList: [], // 多张图片
         zhaiyao: "",
-        conent: "",
+        content: "",
 
         is_slide: false //是否显示轮播图，不属于商品添加
       },
@@ -141,11 +141,12 @@ export default {
     quillEditor //富文本框组件
   },
   methods: {
-    //上传成功后的回调函数
+    //上传封面图片成功后的回调函数
     handleAvatarSuccess(res, file) {
       //设置图片的地址
       this.imageUrl = URL.createObjectURL(file.raw);
 
+      res.shorturl='/' + res.shorturl;
       //把上传成功的结构固执给form.imgList
       this.form.imgList = [res];
     },
@@ -166,15 +167,16 @@ export default {
       // console.log(file, fileList);
       //把删除之后的列表赋值给this.form.fileList
       //循环遍历数组fileList,并获得response
-      const files = fileList.map(v => {
-        return v.response;
-      });
-      this.form.fileList = files;
+      // const files = fileList.map(v => {
+      //   return v.response;
+      // });
+      // this.form.fileList = files;
+      this.form.fileList = fileList;
     },
 
     //图片的预览
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
+    handlePictureCardPreview(fileList) {
+      this.dialogImageUrl = fileList.url;
       this.dialogVisible = true;
     },
 
@@ -183,7 +185,7 @@ export default {
       // console.log(fileList)
 
       // file.response是图片文件
-      this.form.fileList.push(file.response)
+      this.form.fileList.push(file.response);
     },
 
     //提交数据到添加商品的接口
@@ -224,7 +226,7 @@ export default {
     }).then(res => {
       // console.log(res);
       //结构并赋值data
-      const { message, status } = res.data;
+      const { status, message } = res.data;
       //将获取到所有的类别数据保存到categorys
       this.categorys = message;
     });
@@ -233,27 +235,38 @@ export default {
     // 读取url的动态参数id，根据id获取商品数据，获取成功后把数据赋值个this.form
 
     //获取动态参数id  解构并赋值
-    const {id} = this.$route.params;
+    const { id } = this.$route.params;
 
     this.$axios({
-      url:"http://localhost:8899/admin/goods/getgoodsmodel/" + id ,
-      method:'GET',
+      url: "http://localhost:8899/admin/goods/getgoodsmodel/" + id,
+      method: "GET"
     }).then(res => {
-      const {status,message} = res.data;
-
+      // console.log(res);
+      const { status, message } = res.data;
+      // console.log(this.fileList);
       //对象的合并
       this.form = {
         ...message,
         //将category_id转化为数字
         category_id: +message.category_id,
-      }
+
+        /**
+         * 由于后台数据返回的链接是："////imgs/cco90ThfiMDEWElpiTI7ezLj.jpg"，不完整，导致图片显示有问题
+         * 解决方法：在数据返回时重新拼接一下url
+         */
+        //修改图片的预览地址url
+
+        fileList: message.fileList.map(v => {
+          return {
+            ...v,
+            url: `http://localhost:8899${v.shorturl}`
+          };
+        })
+      };
 
       //imageUrl封面预览
       this.imageUrl = message.imgList[0].url;
-
-
-    })
-
+    });
   }
 };
 </script>
