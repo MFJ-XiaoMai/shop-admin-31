@@ -17,6 +17,9 @@ import CategoryList from "./pages/CategoryList.vue";
 import GoodsAdd from "./pages/GoodsAdd.vue";
 import GoodsEdit from './pages/GoodsEdit.vue'
 
+//导入vuex的store
+import store from './store/index.js'
+
 //因为Vue是一个构造函数，它有一个属性prototype(Vue.prototype原型对象)，只有把axios绑定到Vue的原型对象上，就不需要每个组件都去引用axios 了，方便我们调用axios
 Vue.prototype.$axios = axios;
 
@@ -127,4 +130,7 @@ new Vue({
 
   //6.将路由实例挂载在根实例上
   router,
+
+  //仓库对象
+  store,
 }).$mount('#app')// $mount绑定控制区域，相当于el

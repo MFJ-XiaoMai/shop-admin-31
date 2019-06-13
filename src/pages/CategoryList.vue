@@ -51,7 +51,6 @@ export default {
     handleBlur(event, data) {
       //如果修改前后的值是相等的，则进入if执行里面的代码
       if (data.sort_id == event.target.value) {
-        //  通过弹窗询问管理者是否编辑
         return; //跳出函数体，不执行下面的代码
       }
 

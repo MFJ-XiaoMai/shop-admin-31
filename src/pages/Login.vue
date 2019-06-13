@@ -67,8 +67,14 @@ export default {
             withCredentials:true,
           }).then(res=>{//发送数据成功，后台验证
           //解构并且赋值
-          console.log(res);
           const {message,status}=res.data;
+          console.log(message);
+
+          //$store下的方法commit设置仓库的数据
+          //commit方法调用仓库中mutations的方法，第一个参数是方法名
+          //第二个参数就是传递数据对象
+          this.$store.commit('setUser',message)
+
           //登录成功后执行的代码
             if(status===0){
               this.$router.push('/')
